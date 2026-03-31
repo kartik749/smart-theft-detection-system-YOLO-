@@ -7,3 +7,4 @@ package-lock.json
 npm debug.log
 .venv
 uploads/
+detection/assets/
