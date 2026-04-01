@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const auth = require("../middleware/authMiddleware");
 const multer = require("multer");
 const Alert = require("../models/Alert");
 const fs = require("fs");
@@ -14,7 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/",auth, upload.single("image"), async (req, res) => {
     console.log("Request received");
 
     try {
@@ -38,7 +39,8 @@ router.post("/", upload.single("image"), async (req, res) => {
 
         const alert = new Alert({
             imagePath: req.file.path,
-            status: "motion detected"
+            status: "motion detected",
+            userId : req.user.userId
         });
 
         await alert.save();
@@ -52,6 +54,14 @@ router.post("/", upload.single("image"), async (req, res) => {
         console.error(err);
         res.status(500).json({ error: err.message });
     }
+});
+
+router.get("/", auth, async (req, res) => {
+    const alerts = await Alert.find({
+        userId: req.user.userId
+    });
+
+    res.json(alerts);
 });
 
 module.exports = router;

@@ -8,3 +8,4 @@ npm debug.log
 .venv
 uploads/
 detection/assets/
+.env

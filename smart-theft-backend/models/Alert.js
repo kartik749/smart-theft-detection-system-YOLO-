@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
 const alertSchema = new mongoose.Schema({
-    imagePath: String,
-    status: String,
-    timestamp: {
-        type: Date,
-        default: Date.now
+    userId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User"
+    },
+    imagePath : String,
+    status : String,
+    timestamp : {
+        type : Date,
+        default : Date.now()
     }
 });
 
