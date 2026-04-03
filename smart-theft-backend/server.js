@@ -18,6 +18,8 @@ app.use("/api/alerts", require("./routes/alertRoutes"));
 
 app.use("/users",require("./routes/userRoutes"));
 
+app.use("/uploads",express.static("uploads"));
+
 app.listen(5000, () => {
     console.log("Server Running on Port 5000");
 });
